@@ -29,22 +29,23 @@ class _BottomNavigationBarExampleState
         title: const Text('RoRa Feeding', style: TextStyle(fontSize: 30)),
 
       ),
-      body: Center(
-        child: 
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child:IPSaveButton()
-                )
-              ],
-            ),
-            _widgetOptions.elementAt(_selectedIndex),
-          ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.jpg'), 
+            fit: BoxFit.cover, 
+          ), // 
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              IPSaveButton(),
+              _widgetOptions.elementAt(_selectedIndex),
+            ],
+          ),
         ),
       ),
       

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/Widget/TextButton.dart'; 
 import 'package:http/http.dart' as http;
-import 'package:logging/logging.dart';
+import '../Widget/TextButton.dart';
 
 class WaterPump extends StatelessWidget {
   const WaterPump({super.key});
@@ -9,7 +8,6 @@ class WaterPump extends StatelessWidget {
   
   //get
   Future<void> sendWaterRequest() async {
-    final logger = Logger('name');
     const String dataGrow = 'grow';
     const String link1      = '/grow';
     final response = await http.get(
@@ -48,14 +46,14 @@ class WaterPump extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Container(
             alignment: Alignment.center,
-            child: buildTextButton('澆水', const Color.fromARGB(255, 86, 114, 240), () { sendWaterRequest();} ,icon: const Icon(Icons.bluetooth_drive_outlined)),
+            // child: buildTextButton('澆水', const Color.fromARGB(255, 86, 114, 240), () { sendWaterRequest();} ,icon: const Icon(Icons.bluetooth_drive_outlined)),
           )
         ),
         Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Container(
             alignment: Alignment.center,
-            child: buildTextButton('馬達', const Color.fromARGB(255, 86, 114, 240), () { sendMotorRequest();}, icon: const Icon(Icons.cake_rounded)),
+            // child: buildTextButton('馬達', const Color.fromARGB(255, 86, 114, 240), () { sendMotorRequest();}, icon: const Icon(Icons.cake_rounded)),
           )
         )
       ],

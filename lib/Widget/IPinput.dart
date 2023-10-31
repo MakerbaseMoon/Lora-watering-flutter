@@ -17,12 +17,11 @@ class _IPSaveButtonState extends State<IPSaveButton> {
     _loadIPInput();
   }
 
-  Future<void> _loadIPInput() async {
+  void _loadIPInput() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? IPInput = prefs.getString(_preferenceKey);
     if (IPInput != null) {
       _textInputIP.text = IPInput;
-      final String IP =  IPInput;
     }
   }
 
@@ -36,27 +35,36 @@ class _IPSaveButtonState extends State<IPSaveButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            width:200,
-            child:TextField(
+  return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0), // Adjust padding as needed
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
               controller: _textInputIP,
-              decoration: InputDecoration(labelText: 'Enter an IP address'),
+              decoration: InputDecoration(
+                labelText: 'Enter an IP address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0), 
+                ),
+              ),
             ),
-          ),
-          SizedBox(
-            width: 100,
-            child:ElevatedButton(
+            const SizedBox(height: 16.0), 
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // Rounded button
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Button padding
+              ),
               onPressed: () {
                 _saveIPInput();
               },
-              child: const Text('Save IP'),
-            )
-          )
-        ],
+              child: Text('Save IP', style: TextStyle(fontSize: 18)),
+            ),
+          ],
+        ),
       ),
     );
   }
