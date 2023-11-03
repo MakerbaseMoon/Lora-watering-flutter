@@ -16,7 +16,7 @@ class _IPSaveButtonState extends State<IPSaveButton> {
     super.initState();
     _loadIPInput();
   }
-
+  
   void _loadIPInput() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? IPInput = prefs.getString(_preferenceKey);
@@ -28,9 +28,9 @@ class _IPSaveButtonState extends State<IPSaveButton> {
   Future<void> _saveIPInput() async {
     String IPInput = _textInputIP.text;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
     await prefs.setString(_preferenceKey, IPInput);
     print('IPInput:$IPInput');
+    
   }
 
   @override
@@ -56,12 +56,12 @@ class _IPSaveButtonState extends State<IPSaveButton> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0), // Rounded button
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Button padding
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Button padding
               ),
               onPressed: () {
                 _saveIPInput();
               },
-              child: Text('Save IP', style: TextStyle(fontSize: 18)),
+              child: const Text('Save IP', style: TextStyle(fontSize: 18)),
             ),
           ],
         ),
