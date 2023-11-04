@@ -16,6 +16,11 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
   String humidity    = 'Loading...';
   String rssi        = 'Loading...';
   String timestamp   = 'Loading...';
+  String moisture    = 'Loading...';
+  String hour        = 'N/A';
+  String minute      = 'N/A';
+  String second      = 'N/A';
+
   final String _preferenceKey = 'IPInput';
   String host  = '';
 
@@ -24,12 +29,15 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
   void initState() {
     super.initState();
     _loadIP();
-    Timer.periodic(const Duration(minutes: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 10), (timer) {
       fetchDataTemperature();
       fetchDataHumidity();
-      fetchDataTimestamp();
+      fetchDataMoisture();
       fetchDataRssi();
     }); 
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      fetchDataTimestamp(); 
+    });
   }
 
   Future<void> _loadIP() async {
@@ -97,6 +105,7 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
     final response = await http.get(
       Uri.parse('http://$host$timestamp_link')
     );
+  
 
     if (response.statusCode == 200) {
       final data = response.body; 
@@ -104,8 +113,6 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
         setState(() {
           timestamp = data;
         });
-        print('data: $data');
-        print("Timestamp success");
       }
     } else {
       setState(() {
@@ -136,10 +143,83 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
     }
   }
 
+  Future<void> fetchDataMoisture() async {
+    const String moisture_link = '/moisture';
+    final response = await http.get(
+      Uri.parse('http://$host$moisture_link')
+    );
+
+    if (response.statusCode == 200) {
+      final data = response.body; 
+      if (mounted) {
+        setState(() {
+          moisture = data;
+        });
+        print('data: $data');
+        print("moisture success");
+      }    
+    } else {
+      setState(() {
+        moisture = 'moisture Failed to load data';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> timeParts = timestamp.split(':');
+    if (timeParts.length == 3) {
+      hour = timeParts[0];
+      minute = timeParts[1];
+      second = timeParts[2];
+    } else {
+      hour = minute = second = 'N/A';
+    }
+
     return Column(
       children: <Widget>[
+        const SizedBox(height: 30.0),
+        Container(
+          margin: const EdgeInsets.all(25.0),
+          height: 200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Card (
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                    borderRadius: BorderRadius.circular(40.0), 
+                  ),
+                  child:Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        '時間',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 207, 35, 35),
+                          fontSize: 25,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        '$hour 時 $minute 分 $second 秒',
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 199, 37, 37),
+                          fontSize: 25,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  )
+                )
+              ),
+            ]
+          )
+        ),
         const SizedBox(height: 30.0), 
         Container(
           margin: const EdgeInsets.all(25.0),
@@ -234,7 +314,7 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       const Text(
-                        '時間',
+                        '土壤濕度',
                         style: TextStyle(
                           color: Color.fromARGB(255, 207, 35, 35),
                           fontSize: 25,
@@ -242,7 +322,7 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        '$temperature ',
+                        '$moisture pH',
                         style: const TextStyle(
                           color: Color.fromARGB(255, 199, 37, 37),
                           fontSize: 25,

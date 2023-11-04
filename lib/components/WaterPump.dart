@@ -80,7 +80,7 @@ class _WaterPumpState extends State<WaterPump> {
           padding: const EdgeInsets.all(16.0),
           child: Container(
             alignment: Alignment.center,
-            child: buildTextButton('馬達', const Color.fromARGB(255, 86, 114, 240), () { sendMotorRequest();}, icon: const Icon(Icons.cake_rounded)),
+            child: buildTextButton('餵食', const Color.fromARGB(255, 86, 114, 240), () { sendMotorRequest();}, icon: const Icon(Icons.cake_rounded)),
           )
         )
       ],
