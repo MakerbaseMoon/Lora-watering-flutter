@@ -25,7 +25,6 @@ class _TemperatureHumidityState extends State<TemperatureHumidity> {
     super.initState();
     _loadIP();
     Timer.periodic(const Duration(minutes: 1), (timer) {
-      // _loadIPInputFromIPInputDart();
       fetchDataTemperature();
       fetchDataHumidity();
       fetchDataTimestamp();
