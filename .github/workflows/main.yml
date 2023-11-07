@@ -81,4 +81,3 @@ jobs:
           body_path: commit_msg.txt
           name: "Lora watering App${{ github.ref_name }}"
           files: lora-watering-${{ github.ref_name }}.apk 
-          token: ${{ secrets.TOKEN }}
