@@ -26,7 +26,7 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RoRa Feeding', style: TextStyle(fontSize: 30)),
+        title: const Text('遠端養殖控制器', style: TextStyle(fontSize: 30)),
 
       ),
       body: Container(
